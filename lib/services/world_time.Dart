@@ -8,31 +8,31 @@ class WorldTime {
   String flag=""; // url to an asset flag icon
   String url=""; // location url for api endpoint
 
-  WorldTime({ required this.location,required this.flag, required this.url });
+  WorldTime({required this.location,required this.flag, required this.url });
 
   Future<void> getTime() async {
-    // make the request
-    Response response = await get(Uri.parse('http://worldtimeapi.org/api/timezone/$url'));
-    Map data = jsonDecode(response.body);
 
-    // get properties from json
-    String datetime = data['datetime'];
-    String offset = data['utc_offset'].substring(1,3);
+    try{
+      // make the request
+      Response response = await get(Uri.parse('http://worldtimeapi.org/api/timezone/$url'));
+      Map data = jsonDecode(response.body);
 
-    // create DateTime object
-    DateTime now = DateTime.parse(datetime);
-    now = now.add(Duration(hours: int.parse(offset)));
+      // get properties from json
+      String datetime = data['datetime'];
+      String offset = data['utc_offset'].substring(1,3);
 
-    print(now);
+      // create DateTime object
+      DateTime now = DateTime.parse(datetime);
+      now = now.add(Duration(hours: int.parse(offset)));
 
-    // set the time property
-    time = now.toString();
-  }
-  catch(e){
-    print('caught error');
-    time = 'could not get time data'
+      // set the time property
+      time = now.toString();
+    }
+    catch (e) {
+      print(e);
+      time = 'could not get time';
+    }
+
   }
 
 }
-
-// WorldTime instance = WorldTime(location: 'Berlin', flag: 'germany.png', url: 'Europe/Berlin');
