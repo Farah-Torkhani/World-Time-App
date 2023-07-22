@@ -28,6 +28,10 @@ class WorldTime {
     // set the time property
     time = now.toString();
   }
+  catch(e){
+    print('caught error');
+    time = 'could not get time data'
+  }
 
 }
 
