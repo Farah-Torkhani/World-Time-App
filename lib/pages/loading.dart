@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/world_time.Dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -27,9 +28,27 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(50.0),
-        child: Text('loading'),
+      body: Center(
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: IconButton(
+                icon: const Icon(Icons.play_circle_filled),
+                iconSize: 50.0,
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => Container(), fullscreenDialog: true)),
+              ),
+            ),
+            Positioned.fill(
+              child: Center(
+                child: SpinKitWave(
+                  color: Colors.blue,
+                  size: 50.0,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
