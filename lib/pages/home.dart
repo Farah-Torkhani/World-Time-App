@@ -26,8 +26,11 @@ class _HomeState extends State<Home> {
     
     }
 String bgImage = (data['isDaytime'] ?? false) ? 'day.png' : 'night.png';
+Color bgColor =
+        (data['isDaytime'] ?? false) ? Colors.blue : Colors.indigo[700]!;
+
     return Scaffold(
-      //appBar: AppBar(),
+        backgroundColor: bgColor,
         body: SafeArea(
       child: Container(
         decoration: BoxDecoration(
@@ -44,7 +47,8 @@ String bgImage = (data['isDaytime'] ?? false) ? 'day.png' : 'night.png';
                 onPressed: () {
                   Navigator.pushNamed(context, '/location');
                 },
-                icon: Icon(Icons.edit_location),
+                    icon: Icon(Icons.edit_location, color: Colors.grey[300]),
+               
                 label: Text('Edit Location'),
               ),
               SizedBox(height: 20.0),
@@ -56,6 +60,7 @@ String bgImage = (data['isDaytime'] ?? false) ? 'day.png' : 'night.png';
                     style: TextStyle(
                       fontSize: 28.0,
                       letterSpacing: 2.0,
+                          color: Colors.white,
                     ),
                   ),
                 ],
@@ -65,6 +70,7 @@ String bgImage = (data['isDaytime'] ?? false) ? 'day.png' : 'night.png';
                 data['time'],
                 style: TextStyle(
                   fontSize: 66.0,
+                      color: Colors.white
                 ),
               ),
             ],
