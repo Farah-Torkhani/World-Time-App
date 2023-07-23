@@ -8,46 +8,42 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
-  void setupWorldTime() async {
-    WorldTime instance = WorldTime(location: 'Berlin', flag: 'germany.png', url: 'Europe/Berlin');
-    await instance.getTime();
-    Navigator.pushReplacementNamed(context, '/home', arguments: {
-      'location': instance.location,
-      'flag': instance.flag,
-      'time': instance.time
-    });
-  }
+  Map<String, dynamic>? data;
 
   @override
   void initState() {
     super.initState();
+    // Load data and navigate to the home page
     setupWorldTime();
+  }
+
+  void setupWorldTime() async {
+    try {
+      WorldTime instance = WorldTime(location: 'Berlin', flag: 'germany.png', url: 'Europe/Berlin');
+      await instance.getTime();
+      setState(() {
+        // Store the data in the local variable
+        data = {
+          'location': instance.location,
+          'flag': instance.flag,
+          'time': instance.time,
+        };
+      });
+      // Navigate to the home page
+      Navigator.pushReplacementNamed(context, '/home', arguments: data);
+    } catch (e) {
+      print('Error loading data: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[200],
       body: Center(
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: IconButton(
-                icon: const Icon(Icons.play_circle_filled),
-                iconSize: 50.0,
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => Container(), fullscreenDialog: true)),
-              ),
-            ),
-            Positioned.fill(
-              child: Center(
-                child: SpinKitWave(
-                  color: Colors.blue,
-                  size: 50.0,
-                ),
-              ),
-            ),
-          ],
+        child: SpinKitRotatingCircle(
+          color: Colors.white,
+          size: 80.0,
         ),
       ),
     );
