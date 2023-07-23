@@ -21,12 +21,21 @@ class _HomeState extends State<Home> {
       data = {
         'location': 'Unknown Location',
         'time': 'Unknown Time',
+        'isDaytime': true,
       };
+    
     }
-
+String bgImage = (data['isDaytime'] ?? false) ? 'day.png' : 'night.png';
     return Scaffold(
       //appBar: AppBar(),
-      body: SafeArea(
+        body: SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/$bgImage'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 120.0, 0, 0),
           child: Column(
@@ -62,6 +71,7 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+)
     );
   }
 }
